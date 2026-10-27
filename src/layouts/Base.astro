@@ -1,0 +1,45 @@
+---
+import '@fontsource/big-shoulders-display/600';
+import '@fontsource/big-shoulders-display/700';
+import '@fontsource/big-shoulders-display/800';
+import '@fontsource/instrument-serif/400';
+import '@fontsource/instrument-serif/400-italic';
+import '@fontsource/hanken-grotesk/400';
+import '@fontsource/hanken-grotesk/500';
+import '@fontsource/hanken-grotesk/600';
+import '@fontsource/hanken-grotesk/700';
+import '../styles/global.css';
+import Cabecera from '../components/Cabecera.astro';
+import Pie from '../components/Pie.astro';
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+const {
+  title = 'GVB Gestión y Obras · Constructora en Brunete',
+  description = 'Rehabilitación de patrimonio, obra civil y estructuras. Constructora con sede en Brunete para Madrid y Castilla y León.',
+} = Astro.props;
+---
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <meta name="theme-color" content="#F1ECE3" />
+    <link rel="icon" type="image/png" href="/favicon.png" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content="website" />
+  </head>
+  <body>
+    <Cabecera />
+    <main>
+      <slot />
+    </main>
+    <Pie />
+  </body>
+</html>

@@ -1,0 +1,80 @@
+---
+import Base from '../layouts/Base.astro';
+import { contacto } from '../data/obras';
+const c = contacto;
+---
+<Base title="Política de privacidad · GVB Gestión y Obras">
+  <section class="legal">
+    <div class="wrap">
+      <h1 class="disp">Política de privacidad</h1>
+      <p class="nota">Última actualización: {c.actualizado}</p>
+      <p>En esta página te explicamos qué datos personales tratamos cuando visitas {c.dominio} o nos escribes a través del formulario, para qué los usamos y qué derechos tienes, conforme al Reglamento (UE) 2016/679 (RGPD) y a la Ley Orgánica 3/2018 de Protección de Datos Personales y garantía de los derechos digitales (LOPDGDD).</p>
+
+      <h2>Información básica</h2>
+      <table>
+        <tbody>
+          <tr><th scope="row">Responsable</th><td>{c.razonSocial}</td></tr>
+          <tr><th scope="row">Finalidad</th><td>Atender las solicitudes de información y presupuesto que nos envías.</td></tr>
+          <tr><th scope="row">Legitimación</th><td>Tu consentimiento y la aplicación de medidas precontractuales a petición tuya.</td></tr>
+          <tr><th scope="row">Destinatarios</th><td>No se ceden datos a terceros salvo obligación legal. Usamos proveedores de alojamiento web y de correo electrónico que actúan como encargados del tratamiento.</td></tr>
+          <tr><th scope="row">Transferencias internacionales</th><td>Sí, a proveedores fuera del Espacio Económico Europeo con las garantías que se indican más abajo.</td></tr>
+          <tr><th scope="row">Derechos</th><td>Acceso, rectificación, supresión, oposición, limitación del tratamiento y portabilidad.</td></tr>
+        </tbody>
+      </table>
+
+      <h2>1. Responsable del tratamiento</h2>
+      <ul>
+        <li>Razón social: {c.razonSocial}</li>
+        <li>CIF: {c.cif}</li>
+        <li>Domicilio: {c.direccion}</li>
+        <li>Email: {c.email}</li>
+        <li>Teléfono: {c.telefono}</li>
+      </ul>
+      <p>No hemos designado delegado de protección de datos porque nuestra actividad no lo exige según el artículo 37 del RGPD y el artículo 34 de la LOPDGDD.</p>
+
+      <h2>2. Qué datos tratamos</h2>
+      <p><strong>Formulario de contacto.</strong> Nombre, teléfono o email (el que prefieras), el tipo de obra que eliges y lo que nos cuentes en el mensaje. El nombre y un teléfono o email son obligatorios: sin ellos no podemos responderte. Te pedimos que no incluyas en el mensaje datos que no sean necesarios para tu consulta.</p>
+      <p><strong>Navegación.</strong> Al visitar la web, el servidor que la aloja registra de forma técnica la dirección IP, el navegador y la hora de acceso, necesarios para servir las páginas y protegerlas frente a ataques. No usamos esos datos para identificarte ni para hacer perfiles.</p>
+      <p><strong>Contacto directo.</strong> Si nos llamas, nos escribes por email o por WhatsApp, trataremos los datos que nos facilites para atender tu consulta.</p>
+
+      <h2>3. Para qué los usamos</h2>
+      <ul>
+        <li>Responder a tu consulta y, si lo pides, prepararte un presupuesto.</li>
+        <li>Mantener el contacto contigo mientras se estudia o ejecuta la obra.</li>
+        <li>Mantener la web disponible y segura.</li>
+      </ul>
+      <p>No enviamos comunicaciones comerciales y no tomamos decisiones automatizadas ni elaboramos perfiles con tus datos.</p>
+
+      <h2>4. Base jurídica</h2>
+      <ul>
+        <li>Consulta y presupuesto: tu consentimiento al enviar el formulario (art. 6.1.a RGPD) y la aplicación de medidas precontractuales a petición tuya (art. 6.1.b RGPD).</li>
+        <li>Registros técnicos de navegación: nuestro interés legítimo en mantener la web disponible y segura (art. 6.1.f RGPD).</li>
+      </ul>
+      <p>Puedes retirar tu consentimiento en cualquier momento, sin que ello afecte a la licitud del tratamiento anterior a la retirada.</p>
+
+      <h2>5. Cuánto tiempo los conservamos</h2>
+      <p>Las solicitudes que no terminan en encargo se conservan como máximo 12 meses desde el último contacto y después se eliminan. Si llegamos a contratar la obra, los datos pasan a formar parte de la relación contractual y se conservan durante los plazos que exige la normativa mercantil y fiscal. Los registros técnicos de navegación los conserva el proveedor de alojamiento durante el tiempo limitado que establecen sus condiciones.</p>
+
+      <h2>6. Encargados del tratamiento y transferencias internacionales</h2>
+      <p>Para que la web funcione contamos con estos proveedores, que tratan datos solo siguiendo nuestras instrucciones:</p>
+      <ul>
+        <li><strong>Cloudflare, Inc.</strong> (Estados Unidos): alojamiento de la web y protección frente a ataques. Cloudflare está adherida al Marco de Privacidad de Datos UE-EE. UU. y su acuerdo de tratamiento de datos incorpora las cláusulas contractuales tipo de la Comisión Europea.</li>
+        <li><strong>Google</strong> (Google Workspace y Google Apps Script): correo electrónico de la empresa y tratamiento de los mensajes del formulario, que el sistema de Google envía a nuestra cuenta de correo. Google LLC está adherida al Marco de Privacidad de Datos UE-EE. UU. y su acuerdo de tratamiento de datos incorpora las cláusulas contractuales tipo de la Comisión Europea.</li>
+      </ul>
+      <p>No cedemos tus datos a terceros salvo obligación legal (por ejemplo, a requerimiento de un juzgado o de las administraciones públicas).</p>
+      <p>Si nos contactas por WhatsApp, la conversación se gestiona a través de WhatsApp, un servicio independiente de Meta Platforms Ireland Limited para los usuarios de la Unión Europea. WhatsApp trata esos datos según su propia <a href="https://www.whatsapp.com/legal/privacy-policy" rel="noopener">política de privacidad</a> y puede transferirlos fuera de la UE. Te recomendamos no incluir en esos mensajes datos que no sean necesarios para tu consulta.</p>
+
+      <h2>7. Tus derechos</h2>
+      <p>Puedes ejercer en cualquier momento tus derechos de acceso, rectificación, supresión, oposición, limitación del tratamiento y portabilidad escribiendo a {c.email} o por correo postal a {c.direccion}, indicando el derecho que quieres ejercer. Te responderemos en el plazo de un mes. Si no quedas conforme con nuestra respuesta, puedes presentar una reclamación ante la Agencia Española de Protección de Datos en <a href="https://www.aepd.es" target="_blank" rel="noopener">www.aepd.es</a>.</p>
+
+      <h2>8. Cookies</h2>
+      <p>Esta web no instala cookies ni usa herramientas de analítica o publicidad. Las tipografías se sirven desde nuestro propio dominio, sin conexiones a servicios de terceros. Por eso no mostramos aviso de cookies.</p>
+
+      <h2>9. Seguridad</h2>
+      <p>La web funciona solo con conexión cifrada (HTTPS) y aplicamos medidas técnicas y organizativas adecuadas para proteger tus datos frente a pérdida, acceso no autorizado o alteración.</p>
+
+      <h2>10. Cambios en esta política</h2>
+      <p>Podemos actualizar esta política para adaptarla a cambios legales o en nuestros servicios. La fecha de la última actualización aparece al principio de la página.</p>
+    </div>
+  </section>
+</Base>

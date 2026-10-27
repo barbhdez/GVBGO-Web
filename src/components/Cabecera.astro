@@ -1,0 +1,27 @@
+---
+const enlaces = [
+  { texto: 'Empresa', id: 'empresa' },
+  { texto: 'Servicios', id: 'servicios' },
+  { texto: 'Proyectos', id: 'proyectos' },
+  { texto: 'Proceso', id: 'proceso' },
+  { texto: 'Contacto', id: 'contacto' },
+];
+---
+<header class="cab">
+  <div class="wrap cab__fila">
+    <a class="marca" href="/#inicio" aria-label="GVB Gestión y Obras, inicio">
+      <span class="rueda" aria-hidden="true">
+        <span class="rueda__giro" data-rueda><img src="/logo-dientes.png" alt="" width="48" height="48" /></span>
+        <img src="/logo-centro.png" alt="" width="48" height="48" />
+      </span>
+      <span class="marca__nombre">
+        <span class="disp" style="font-size: 24px">GVB</span>
+        <small>Gestión y Obras</small>
+      </span>
+    </a>
+    <nav class="menu" aria-label="Índice">
+      {enlaces.map((e) => <a href={`/#${e.id}`} data-nav={e.id}>{e.texto}</a>)}
+    </nav>
+  </div>
+  <div class="progreso" aria-hidden="true"><span data-progreso></span></div>
+</header>

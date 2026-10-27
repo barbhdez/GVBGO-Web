@@ -1,0 +1,287 @@
+---
+import { Image, getImage } from 'astro:assets';
+import Base from '../layouts/Base.astro';
+import { obras, destacadas, fotosProceso, servicios, pasos, empresaFotos, contacto, provincias } from '../data/obras';
+const galerias = await Promise.all(
+  obras.map(async (o) =>
+    Promise.all(o.fotos.map(async (f) => (await getImage({ src: f, width: 1800, format: 'webp' })).src)),
+  ),
+);
+
+const portada = destacadas.map((id) => obras.findIndex((o) => o.id === id));
+
+const palabras = ['Restauración', 'Rehabilitación', 'Construcción singular', 'Miradores', 'Patrimonio', '9 provincias'];
+const cinta = [...palabras, ...palabras, ...palabras, ...palabras];
+
+const datos = [
+  { k: 'Oficina', v: 'Villafranca del Castillo, Madrid' },
+  { k: 'En activo desde', v: '2023' },
+  { k: 'Obras', v: 'Más de 40' },
+  { k: 'Provincias', v: provincias.join(', ') },
+];
+const cifras = [
+  { v: '+40', l: 'obras realizadas' },
+  { v: String(provincias.length), l: 'provincias' },
+  { v: '2023', l: 'en activo desde' },
+  { v: String(obras.filter((o) => o.categoria === 'Miradores').length), l: 'miradores construidos' },
+];
+const filtros = ['Todas', 'Patrimonio', 'Miradores', 'Edificios', 'Obra civil'];
+const necesidades = ['Restauración', 'Rehabilitación', 'Construcción singular', 'Otro'];
+const FORM_URL = 'https://script.google.com/macros/s/AKfycbw201csuocX_JCv_YPeDfH86SFajHDPqLQOXDDTjL_SobJo3Qd1KBHiDI3TeV_oneMO/exec';
+
+const flecha = 'M5 12h14M13 6l6 6-6 6';
+---
+<Base>
+  <section id="inicio" class="portada" data-seccion>
+    <div class="wrap portada__top">
+      <h1 class="disp">Construimos lo que <span class="ser">permanece.</span></h1>
+      <div class="portada__lado">
+        <p>Restauración, rehabilitación y construcción singular.</p>
+        <div class="botones">
+          <a class="btn btn--tinta" href="#proyectos">Ver obras</a>
+          <a class="btn btn--corten" href="#contacto">Pide presupuesto</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="carrusel" data-carrusel aria-roledescription="carrusel" aria-label="Obras destacadas">
+      <div class="carrusel__escena" data-escena>
+        {portada.map((oi, i) => (
+          <button class="panel" data-panel={i} data-ref={oi} aria-label={`Ver ${obras[oi].titulo}`}>
+            <Image
+              src={obras[oi].fotos[0]}
+              alt=""
+              widths={[640, 1000, 1400]}
+              sizes="(max-width: 700px) 80vw, 58vw"
+              loading={i === 0 ? 'eager' : 'lazy'}
+              fetchpriority={i === 0 ? 'high' : 'auto'}
+              draggable="false"
+            />
+          </button>
+        ))}
+      </div>
+      <button class="circ carrusel__flecha carrusel__flecha--ant" data-anterior aria-label="Obra anterior">
+        <svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6" /></svg>
+      </button>
+      <button class="circ carrusel__flecha carrusel__flecha--sig" data-siguiente aria-label="Obra siguiente">
+        <svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6" /></svg>
+      </button>
+    </div>
+
+    <div class="wrap carrusel__pie">
+      <div class="leyenda" aria-live="polite">
+        <span class="leyenda__tipo" data-ley-tipo>{obras[portada[0]].tipo}</span>
+        <span class="leyenda__titulo disp" data-ley-titulo>{obras[portada[0]].titulo}</span>
+        <span class="leyenda__lugar" data-ley-lugar>{obras[portada[0]].lugar}</span>
+        <p class="leyenda__texto" data-ley-texto>{obras[portada[0]].texto}</p>
+      </div>
+      <div class="mandos">
+        <div class="puntos">
+          {portada.map((oi, i) => <button data-punto={i} aria-label={`Ver ${obras[oi].titulo}`} aria-current={i === 0 ? 'true' : 'false'} />)}
+        </div>
+      </div>
+    </div>
+    <script type="application/json" id="datos-obras" set:html={JSON.stringify(obras.map((o, i) => ({ titulo: o.titulo, lugar: o.lugar, tipo: o.tipo, texto: o.texto, fotos: galerias[i] })))} />
+  </section>
+
+  <div class="cinta" aria-hidden="true">
+    <div class="cinta__pista">
+      {cinta.map((t) => <span class="cinta__item disp">{t}<i /></span>)}
+    </div>
+  </div>
+  <section id="empresa" class="empresa" data-seccion data-parallax>
+    <div class="wrap empresa__fila rv">
+      <div class="empresa__texto">
+        <p class="eyebrow">La empresa</p>
+        <p>GVB Gestión y Obras trabaja desde 2023 en restauración, rehabilitación y construcción singular: castillos, conventos, miradores y naves.</p>
+        <dl class="datos">
+          {datos.map((d) => <div><dt>{d.k}</dt><dd>{d.v}</dd></div>)}
+        </dl>
+      </div>
+      <div class="collage">
+        <div class="collage__a" data-par="-14">
+          <Image src={empresaFotos.pasillo} alt="Pasillo de celosía metálica junto a la muralla del castillo de El Barco de Ávila" widths={[500, 900]} sizes="(max-width: 900px) 62vw, 30vw" />
+        </div>
+        <div class="collage__b" data-par="22">
+          <Image src={empresaFotos.equipo} alt="Montaje de la estructura de acero del mirador de Piedrashitas frente a los Picos de Europa" widths={[400, 800]} sizes="(max-width: 900px) 56vw, 28vw" />
+        </div>
+      </div>
+    </div>
+  </section>
+  <section class="cifras corte-sube" aria-label="Cifras">
+    <div class="wrap cifras__rejilla rv">
+      {cifras.map((c) => <div class="cifra"><b>{c.v}</b><span>{c.l}</span></div>)}
+    </div>
+  </section>
+  <section id="servicios" class="servicios corte-baja" data-seccion>
+    <div class="wrap rv">
+      <p class="eyebrow">Qué hacemos</p>
+      <div class="servicios__fila">
+        <div class="servicios__lista" role="group" aria-label="Servicios">
+          {servicios.map((s, i) => (
+            <button class="serv" data-serv={i} aria-pressed={i === 0 ? 'true' : 'false'}>
+              <span class="serv__nombre">{s.nombre}</span>
+              <svg aria-hidden="true" width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d={flecha} /></svg>
+            </button>
+          ))}
+        </div>
+        <div class="servicios__vista">
+          <div class="marco">
+            {servicios.map((s, i) => (
+              <Image src={s.foto} alt={s.alt} widths={[600, 1000]} sizes="(max-width: 900px) 100vw, 42vw" class={i === 0 ? 'on' : ''} data-serv-foto={i} />
+            ))}
+          </div>
+          <p class="servicios__texto" aria-live="polite" data-serv-texto>{servicios[0].texto}</p>
+          <script type="application/json" id="datos-servicios" set:html={JSON.stringify(servicios.map((s) => s.texto))} />
+        </div>
+      </div>
+    </div>
+  </section>
+  <section id="proyectos" class="proyectos corte-sube" data-seccion data-cursor-zona>
+    <div class="wrap rv">
+      <div class="proyectos__cab">
+        <div>
+          <p class="eyebrow">Proyectos</p>
+          <h2 class="h2 disp">Obra <span class="ser">hecha</span></h2>
+        </div>
+        <div class="filtros" role="group" aria-label="Filtrar proyectos">
+          {filtros.map((f, i) => (
+            <button class="chip" data-filtro={f} aria-pressed={i === 0 ? 'true' : 'false'}>{f}</button>
+          ))}
+        </div>
+      </div>
+      <div class="rejilla">
+        {obras.map((o, i) => (
+          <button class="ficha" data-obra={i} data-cat={o.categoria} aria-label={`Ver fotos de ${o.titulo}`}>
+            <div class="ficha__foto">
+              <Image src={o.fotos[0]} alt="" widths={[500, 900]} sizes="(max-width: 900px) 100vw, 33vw" draggable="false" />
+            </div>
+            <div class="ficha__info">
+              <span class="ficha__barra" />
+              <span class="ficha__tipo">{o.tipo}</span>
+              <span class="ficha__titulo disp">{o.titulo}</span>
+              <span class="ficha__lugar">{o.lugar}</span>
+            </div>
+          </button>
+        ))}
+      </div>
+    </div>
+    <div class="cursor disp" aria-hidden="true" data-cursor>Ver obra</div>
+  </section>
+
+  <dialog class="visor" data-visor aria-labelledby="visor-titulo">
+    <div class="visor__cab">
+      <div>
+        <div class="ficha__tipo" data-visor-tipo></div>
+        <div class="disp" id="visor-titulo" style="font-size: 28px; font-weight: 700" data-visor-titulo></div>
+      </div>
+      <button class="circ" data-visor-cerrar aria-label="Cerrar">
+        <svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 6l12 12M18 6L6 18" /></svg>
+      </button>
+    </div>
+    <div class="visor__cuerpo">
+      <button class="circ" data-visor-ant aria-label="Foto anterior">
+        <svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6" /></svg>
+      </button>
+      <img data-visor-img alt="" />
+      <button class="circ circ--lleno" data-visor-sig aria-label="Foto siguiente">
+        <svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6" /></svg>
+      </button>
+    </div>
+    <div class="visor__pie"><div class="visor__info"><span data-visor-lugar></span><p data-visor-texto></p></div><span data-visor-pos></span></div>
+  </dialog>
+  <section id="fotos-proceso" class="antdes corte-baja" data-seccion>
+    <div class="wrap rv">
+      <div class="antdes__cab">
+        <p class="eyebrow">Fotos del proceso</p>
+        <h2 class="h2 disp">De la obra <span class="ser">al resultado</span></h2>
+      </div>
+      <div class="fundidos">
+        {fotosProceso.map((p) => (
+          <button class="fundido" type="button" aria-pressed="false" aria-label={`${p.nombre}: ver la obra terminada`} data-fundido>
+            <span class="fundido__fotos">
+              <Image class="fundido__obra" src={p.obra} alt={`${p.nombre} durante la obra`} widths={[500, 800]} sizes="(max-width: 700px) 100vw, (max-width: 1100px) 50vw, 420px" loading="lazy" />
+              <Image class="fundido__fin" src={p.fin} alt={`${p.nombre} terminado`} widths={[500, 800]} sizes="(max-width: 700px) 100vw, (max-width: 1100px) 50vw, 420px" loading="lazy" />
+              <span class="fundido__estado"><span class="fundido__en-obra">En obra</span><span class="fundido__terminado">Terminado</span></span>
+            </span>
+            <span class="fundido__pie">
+              <span class="fundido__nombre disp">{p.nombre}</span>
+              <span class="fundido__lugar">{p.lugar}</span>
+            </span>
+          </button>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section id="proceso" class="proceso corte-sube" data-seccion>
+    <div class="wrap proceso__fila rv">
+      <div class="proceso__texto">
+        <p class="eyebrow">Cómo trabajamos</p>
+        <h2 class="h2 disp">Del proyecto <span class="ser">a la entrega</span></h2>
+        <div class="linea">
+          <span class="linea__base" />
+          <span class="linea__lleno" data-linea />
+          <ol class="pasos">
+            {pasos.map((p, i) => (
+              <li><button class={`paso${i === 0 ? ' hecho' : ''}`} data-paso={i} aria-pressed={i === 0 ? 'true' : 'false'}><i aria-hidden="true" /><span>{p.nombre}</span></button></li>
+            ))}
+          </ol>
+          <span class="grua" data-grua aria-hidden="true"><svg viewBox="0 0 60 48" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="18" width="30" height="16" rx="3" /><rect x="36" y="22" width="16" height="12" rx="4" /><rect x="41" y="25" width="7" height="4" rx="1" /><path d="M12 18V8" /><path d="M12 8L30 4" /><path d="M30 4v8" /><circle cx="14" cy="38" r="4" /><circle cx="44" cy="38" r="4" /></svg></span>
+        </div>
+        <p class="proceso__desc" aria-live="polite" data-paso-texto>{pasos[0].texto}</p>
+        <script type="application/json" id="datos-pasos" set:html={JSON.stringify(pasos.map((p) => p.texto))} />
+      </div>
+      <div class="proceso__ilustra" aria-hidden="true">
+        <svg class="ilu on" viewBox="0 0 240 240" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><rect x="40" y="50" width="160" height="140" rx="4" /><path d="M40 95h160M95 50v140M140 140h40v25h-40z" /><path d="M60 120h20M60 165h20" /></svg>
+        <svg class="ilu" viewBox="0 0 240 240" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><rect x="60" y="30" width="120" height="180" rx="6" /><path d="M80 75h80M80 100h80M80 125h50" /><circle cx="150" cy="170" r="20" /><circle cx="150" cy="170" r="8" /></svg>
+        <svg class="ilu" viewBox="0 0 240 240" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M120 40l80 150H40z" /><path d="M120 95v50" /><circle cx="120" cy="165" r="3" /></svg>
+        <svg class="ilu" viewBox="0 0 240 240" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M40 120h40M160 120h40" /><circle cx="120" cy="120" r="40" /><circle cx="120" cy="120" r="12" /><path d="M120 80v-20M120 160v20M80 120H60M160 120h20" /></svg>
+        <svg class="ilu" viewBox="0 0 240 240" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><circle cx="120" cy="120" r="75" /><path d="M85 122l24 24 46-50" /></svg>
+      </div>
+    </div>
+  </section>
+  <section id="contacto" class="contacto corte-baja" data-seccion>
+    <div class="wrap contacto__fila rv">
+      <div class="contacto__texto">
+        <p class="eyebrow">Contacto</p>
+        <h2 class="h2 disp">Hablemos <span class="ser">de tu obra.</span></h2>
+        <div class="vias">
+          <a href={contacto.telefonoHref} style="font-weight: 600">{contacto.telefono}</a>
+          <a href={contacto.emailHref}>{contacto.email}</a>
+          <a href={contacto.whatsappHref} target="_blank" rel="noopener">WhatsApp</a>
+          <span>{contacto.direccion}</span>
+        </div>
+        <div class="contacto__foto">
+          <Image src={empresaFotos.mirador} alt="Mirador de La Galiana con prismáticos asomado al Cañón del Río Lobos" widths={[420, 840]} sizes="420px" />
+        </div>
+      </div>
+
+      <form class="formulario" data-form action={FORM_URL} method="POST">
+        <input type="text" name="web" class="sr-only" tabindex="-1" autocomplete="off" aria-hidden="true" />
+        <input type="hidden" name="tipo" value="Restauración" data-tipo />
+        <fieldset>
+          <legend>¿Qué necesitas?</legend>
+          <div class="filtros">
+            {necesidades.map((n, i) => <button type="button" class="chip" data-necesidad={n} aria-pressed={i === 0 ? 'true' : 'false'}>{n}</button>)}
+          </div>
+        </fieldset>
+        <label class="campo">Nombre<input class="inp" type="text" name="nombre" required placeholder="Tu nombre" autocomplete="name" /></label>
+        <label class="campo">Teléfono o email<input class="inp" type="text" name="contacto" required placeholder="600 000 000 o tu@email.com" autocomplete="on" inputmode="email" data-contacto /></label>
+        <label class="campo">Cuéntanos la obra<textarea class="inp" name="mensaje" rows="3" placeholder="Ubicación, plazos, lo que tengas"></textarea></label>
+        <label class="acepto"><input type="checkbox" name="acepta_privacidad" value="si" required /><span>He leído la información básica sobre protección de datos y acepto la <a href="/privacidad">política de privacidad</a>.</span></label>
+        <div class="info-datos">
+          <p><b>Responsable:</b> {contacto.razonSocial} <b>Finalidad:</b> atender tu solicitud y, si lo pides, enviarte presupuesto. <b>Legitimación:</b> tu consentimiento y la aplicación de medidas precontractuales a petición tuya. <b>Destinatarios:</b> no se ceden datos a terceros salvo obligación legal. <b>Derechos:</b> acceso, rectificación, supresión, oposición, limitación y portabilidad, escribiendo a {contacto.email}. <b>Más información:</b> en la <a href="/privacidad">política de privacidad</a>.</p>
+        </div>
+        <button type="submit" class="btn btn--ocre">Enviar solicitud</button>
+        <p data-form-error hidden style="margin: 0; font-size: 14px; color: #F3D6AE">No se ha podido enviar. Llámanos o escríbenos por WhatsApp.</p>
+      </form>
+      <div class="gracias" data-gracias hidden>
+        <b>Recibido.</b>
+        <span style="font-size: 18px; color: #D5CEC3">Te contactamos en menos de 24 horas.</span>
+      </div>
+    </div>
+  </section>
+
+  <script src="../scripts/main.js"></script>
+</Base>

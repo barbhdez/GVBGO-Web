@@ -1,0 +1,46 @@
+---
+import Base from '../layouts/Base.astro';
+import { contacto } from '../data/obras';
+const c = contacto;
+---
+<Base title="Aviso legal · GVB Gestión y Obras">
+  <section class="legal">
+    <div class="wrap">
+      <h1 class="disp">Aviso legal</h1>
+      <p class="nota">Última actualización: {c.actualizado}</p>
+
+      <h2>1. Datos del titular</h2>
+      <p>En cumplimiento del artículo 10 de la Ley 34/2002, de 11 de julio, de Servicios de la Sociedad de la Información y de Comercio Electrónico (LSSI-CE), te informamos de que el titular de {c.dominio} es:</p>
+      <ul>
+        <li>Denominación social: {c.razonSocial}</li>
+        <li>Nombre comercial: {c.marca}</li>
+        <li>CIF: {c.cif}</li>
+        <li>Domicilio: {c.direccion}</li>
+        <li>Email: {c.email}</li>
+        <li>Teléfono: {c.telefono}</li>
+        <li>Datos registrales: {c.registro}</li>
+      </ul>
+
+      <h2>2. Objeto</h2>
+      <p>Esta web presenta la actividad de {c.razonSocial} como empresa constructora y permite contactar con ella. El acceso y uso de la web te atribuye la condición de usuario e implica la aceptación de este aviso legal.</p>
+
+      <h2>3. Uso de la web</h2>
+      <p>Te comprometes a usar la web y sus contenidos de forma lícita, sin dañar su funcionamiento ni los derechos de {c.razonSocial} o de terceros, y a facilitar datos veraces en el formulario de contacto.</p>
+
+      <h2>4. Propiedad intelectual e industrial</h2>
+      <p>Los textos, fotografías, logotipos, marcas y diseño de esta web pertenecen a {c.razonSocial} o a sus autores, que han autorizado su uso. Queda prohibida su reproducción, distribución, comunicación pública o transformación sin autorización expresa, salvo para uso personal y privado.</p>
+
+      <h2>5. Responsabilidad</h2>
+      <p>{c.razonSocial} procura que la información de la web sea correcta y esté actualizada, pero no garantiza la ausencia de errores ni la disponibilidad continua de la web, y no responde de los daños derivados de su uso indebido. La información publicada es orientativa y no constituye una oferta contractual: las condiciones de cada obra se fijan en su presupuesto.</p>
+
+      <h2>6. Enlaces</h2>
+      <p>Esta web puede contener enlaces a sitios de terceros sobre los que {c.razonSocial} no tiene control y de cuyos contenidos no se responsabiliza.</p>
+
+      <h2>7. Protección de datos y cookies</h2>
+      <p>El tratamiento de datos personales se explica en la <a href="/privacidad">política de privacidad</a>. Esta web no utiliza cookies.</p>
+
+      <h2>8. Legislación aplicable</h2>
+      <p>Este aviso legal se rige por la legislación española. Para cualquier controversia, las partes se someten a los juzgados y tribunales que correspondan conforme a la ley; cuando el usuario sea consumidor, serán los de su domicilio.</p>
+    </div>
+  </section>
+</Base>
